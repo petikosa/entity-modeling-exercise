@@ -20,9 +20,9 @@ public class UserProfile {
     String lastName;
     LocalDate dateOfBirth;
     String description;
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany
     List<UserProfile> friends;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     UserCredentials userCredentials;
 
     public UserProfile(String firstName, String lastName, LocalDate dateOfBirth, String description, List<UserProfile> friends, UserCredentials userCredentials) {

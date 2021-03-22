@@ -17,9 +17,9 @@ public class Comment {
     String title;
     String text;
     LocalDate timestamp;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     UserProfile user;
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany
     List<UserProfile> likes;
 
     public Comment(String title, String text, LocalDate timestamp, UserProfile user, List<UserProfile> likes) {
