@@ -20,10 +20,18 @@ public class UserProfile {
     String lastName;
     LocalDate dateOfBirth;
     String description;
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     List<UserProfile> friends;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     UserCredentials userCredentials;
+
+    public void addFriends(List<UserProfile> friends) {
+        this.friends.addAll(friends);
+    }
+
+    public void addFriend(UserProfile friend) {
+        this.friends.add(friend);
+    }
 
     public UserProfile(String firstName, String lastName, LocalDate dateOfBirth, String description, List<UserProfile> friends, UserCredentials userCredentials) {
         this.firstName = firstName;

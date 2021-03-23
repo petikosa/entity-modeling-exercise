@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(classes = {DemoApplication.class, ProfileService.class})
@@ -23,6 +24,6 @@ class DemoApplicationTests {
 
 	@Test
 	void getAllProfiles() {
-		assertNotNull(profileService);
+		assertEquals(profileService.getUserProfiles().size(), 4);
 	}
 }

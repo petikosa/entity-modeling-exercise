@@ -1,22 +1,18 @@
 package entity.exercise;
 
-import entity.exercise.repo.ProfileRepository;
 import entity.exercise.model.UserCredentials;
 import entity.exercise.model.UserProfile;
+import entity.exercise.repo.ProfileRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = {"entity.exercise.repo"})
-@ComponentScan(basePackages = { "entity.exercise.repo" })
 public class DemoApplication {
 
     public static void main(String[] args) {
@@ -38,10 +34,11 @@ public class DemoApplication {
         var p4 = new UserProfile("Marek", "Lipovsky",
                 LocalDate.now(), "The guy from the mountains.", new ArrayList<>(), c4);
 		return (args) -> {
-                repository.saveAll(List.of(c1, c2, c3, c4));
-                repository.saveAll(List.of(p1, p2, p3, p4));
-                p1.getFriends().addAll(List.of(p2, p3, p4));
-                repository.save(p1);
+                p1.addFriends(List.of(p2, p3, p4));
+                p2.addFriends(List.of(p1, p3));
+                p3.addFriends(List.of(p1, p2, p4));
+                p4.addFriends(List.of(p1, p3));
+                repository.saveAll(List.of(p1));
 		    };
         }
 }
