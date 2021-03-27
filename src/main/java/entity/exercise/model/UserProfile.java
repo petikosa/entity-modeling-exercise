@@ -12,15 +12,17 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "USERPROFILE")
 public class UserProfile {
     @Id
     @GeneratedValue
     long id;
+    @Column(name = "FIRSTNAME")
     String firstName;
     String lastName;
     LocalDate dateOfBirth;
     String description;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<UserProfile> friends;
     @OneToOne(cascade = CascadeType.ALL)
     UserCredentials userCredentials;

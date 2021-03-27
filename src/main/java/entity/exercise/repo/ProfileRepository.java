@@ -29,6 +29,16 @@ public interface ProfileRepository extends CrudRepository<UserProfile, Long> {
     @Query("select p from UserProfile p join p.friends f group by p order by count(f), p.lastName")
     List<UserProfile> getUserWithMostFriends();
 
+    @Query(value = "select u1.firstName, count(u3.id) as amount from UserProfile u1 " +
+            "join USERPROFILE_FRIENDS u2 on u1.id = u2.USER_PROFILE_ID join UserProfile u3 on u3.id = u2.FRIENDS_ID " +
+            "group by u1.firstName order by count(u3.id) desc limit 1",
+            nativeQuery = true)
+    Optional<UserLong> getUserWithMostFriendsSql();
+
+    @Query("select p.firstName as firstName, count(f) as amount from UserProfile p join p.friends f group by firstName" +
+            " having count(f) > :a order by amount desc")
+    List<UserLong> getUsersWithAtLeastFriends(@Param("a") long a);
+
     @Query("select p from UserProfile p where p.dateOfBirth > :date")
     List<UserProfile> getUsersYoungerThan(@Param("date") LocalDate date);
 }
