@@ -65,4 +65,10 @@ class ProfileStreamsTest {
 		var users = profileService.getUsersOlderThan(LocalDate.of(1980, 1, 1));
 		users.forEach(user -> System.out.println(user.getFirstName() + " - " + user.getDateOfBirth()));
 	}
+
+	@Test
+	void getMostCommentingUsers() {
+		var users = profileService.getMostCommentingUsers();
+		users.forEach((k, v) -> System.out.println(k.getFirstName() + " - " + v));
+	}
 }

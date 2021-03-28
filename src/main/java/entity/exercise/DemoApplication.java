@@ -61,7 +61,7 @@ public class DemoApplication {
                 p4.addFriends(List.of(p1, p3));
                 p5.addFriends(List.of(p1));
                 profileRepository.saveAll(List.of(p1));
-                commentRepository.saveAll(List.of(m1, m2, m3));
+                // commentRepository.saveAll(List.of(m1, m2, m3));
 		    };
         }
 }

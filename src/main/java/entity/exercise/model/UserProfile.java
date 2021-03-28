@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,8 +29,12 @@ public class UserProfile {
     List<UserProfile> friends;
     @OneToOne(cascade = CascadeType.ALL)
     UserCredentials userCredentials;
-    @OneToMany
-    List<Comment> comments;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    List<Comment> comments = new ArrayList<>();
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
 
     public void addFriends(List<UserProfile> friends) {
         this.friends.addAll(friends);

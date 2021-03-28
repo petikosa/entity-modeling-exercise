@@ -56,4 +56,15 @@ public class ProfileService {
                 .collect(Collectors.toList());
     }
 
+    public Map<UserProfile, Integer> getMostCommentingUsers() {
+        var userComments = profileRepository.findAll().stream()
+                .collect(toMap(identity(), u -> u.getComments().size()));
+        return userComments.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+
+    }
 }
