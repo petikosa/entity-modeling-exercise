@@ -1,5 +1,6 @@
 package entity.exercise.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,10 +23,13 @@ public class UserProfile {
     String lastName;
     LocalDate dateOfBirth;
     String description;
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<UserProfile> friends;
     @OneToOne(cascade = CascadeType.ALL)
     UserCredentials userCredentials;
+    @OneToMany
+    List<Comment> comments;
 
     public void addFriends(List<UserProfile> friends) {
         this.friends.addAll(friends);
@@ -42,5 +46,16 @@ public class UserProfile {
         this.description = description;
         this.friends = friends;
         this.userCredentials = userCredentials;
+    }
+
+    @Override
+    public String toString() {
+        return "UserProfile{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", description='" + description + '\'' +
+                ", userCredentials=" + userCredentials +
+                '}';
     }
 }

@@ -1,7 +1,9 @@
 package entity.exercise;
 
+import entity.exercise.model.Comment;
 import entity.exercise.model.UserCredentials;
 import entity.exercise.model.UserProfile;
+import entity.exercise.repo.CommentRepository;
 import entity.exercise.repo.ProfileRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +22,7 @@ public class DemoApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(ProfileRepository repository) {
+    public CommandLineRunner demo(ProfileRepository profileRepository, CommentRepository commentRepository) {
         UserCredentials c1 = new UserCredentials("peter@gmail.com", "pass");
         UserCredentials c2 = new UserCredentials("steph@mail.com", "pass");
         UserCredentials c3 = new UserCredentials("jon@yahoo.com", "pass");
@@ -36,13 +38,30 @@ public class DemoApplication {
                 LocalDate.of(2003, 3, 12), "An African reggae star.", new ArrayList<>(), c3);
         var p4 = new UserProfile("Marek", "Lipovsky",
                 LocalDate.of(1970, 9, 2), "The guy from the mountains.", new ArrayList<>(), c4);
-		return (args) -> {
+
+        var m1 = new Comment("This is my first post ever.", LocalDate.now(), p1, List.of(p2),
+                List.of(new Comment("I agree with your comment above.", LocalDate.now(), p2, null, null),
+                        new Comment("Great that you agree.", LocalDate.now(), p1, null, null)),
+                true);
+
+        var m2 = new Comment("This is a post on the geopolitical situation.", LocalDate.now(), p2, List.of(p3, p1, p4),
+                List.of(new Comment("I have a slightly different opinion.", LocalDate.now(), p1, null, null),
+                        new Comment("This needs further discussion.", LocalDate.now(), p3, null, null),
+                        new Comment("There are several factors involved.", LocalDate.now(), p4, null, null)),
+                true);
+
+        var m3 = new Comment("What about going in the mountains today?", LocalDate.of(2021, 3, 2), p3, List.of(p3, p1, p4, p2),
+                List.of(new Comment("That's an awesome idea.", LocalDate.now(), p1, null, null)),
+                true);
+
+        return (args) -> {
                 p1.addFriends(List.of(p2, p3, p4, p5));
                 p2.addFriends(List.of(p1, p3));
                 p3.addFriends(List.of(p1, p2, p4));
                 p4.addFriends(List.of(p1, p3));
                 p5.addFriends(List.of(p1));
-                repository.saveAll(List.of(p1));
+                profileRepository.saveAll(List.of(p1));
+                commentRepository.saveAll(List.of(m1, m2, m3));
 		    };
         }
 }

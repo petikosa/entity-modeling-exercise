@@ -14,19 +14,30 @@ public class Comment {
     @Id
     @GeneratedValue
     long id;
-    String title;
     String text;
     LocalDate timestamp;
-    @OneToOne
+    @ManyToOne
     UserProfile user;
-    @OneToMany
+    @ManyToMany
     List<UserProfile> likes;
+    @ManyToMany(cascade = CascadeType.ALL)
+    List<Comment> comments;
+    boolean isPost = false;
 
-    public Comment(String title, String text, LocalDate timestamp, UserProfile user, List<UserProfile> likes) {
-        this.title = title;
+    public Comment(String text, LocalDate timestamp, UserProfile user, List<UserProfile> likes, List<Comment> comments) {
         this.text = text;
         this.timestamp = timestamp;
         this.user = user;
         this.likes = likes;
+        this.comments = comments;
+    }
+
+    public Comment(String text, LocalDate timestamp, UserProfile user, List<UserProfile> likes, List<Comment> comments, boolean isPost) {
+        this.text = text;
+        this.timestamp = timestamp;
+        this.user = user;
+        this.likes = likes;
+        this.comments = comments;
+        this.isPost = isPost;
     }
 }
