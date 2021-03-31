@@ -39,19 +39,19 @@ public class DemoApplication {
         var p4 = new UserProfile("Marek", "Lipovsky",
                 LocalDate.of(1970, 9, 2), "The guy from the mountains.", new ArrayList<>(), c4);
 
-        var m1 = new Comment("This is my first post ever.", LocalDate.now(), p1, List.of(p2),
-                List.of(new Comment("I agree with your comment above.", LocalDate.now(), p2, null, null),
-                        new Comment("Great that you agree.", LocalDate.now(), p1, null, null)),
+        var m1 = new Comment("This is my first post ever.", LocalDate.of(2021, 1, 14), p1, List.of(p2),
+                List.of(new Comment("I agree with your comment above.", LocalDate.of(2021, 1, 16), p2, null, null),
+                        new Comment("Great that you agree.", LocalDate.of(2021, 1, 19), p1, null, null)),
                 true);
 
-        var m2 = new Comment("This is a post on the geopolitical situation.", LocalDate.now(), p2, List.of(p3, p1, p4),
-                List.of(new Comment("I have a slightly different opinion.", LocalDate.now(), p1, null, null),
-                        new Comment("This needs further discussion.", LocalDate.now(), p3, null, null),
-                        new Comment("There are several factors involved.", LocalDate.now(), p4, null, null)),
+        var m2 = new Comment("This is a post on the geopolitical situation.", LocalDate.of(2021, 2, 23), p2, List.of(p3, p1, p4),
+                List.of(new Comment("I have a slightly different opinion.", LocalDate.of(2021, 2, 24), p1, null, null),
+                        new Comment("This needs further discussion.", LocalDate.of(2021, 2, 24), p3, null, null),
+                        new Comment("There are several factors involved.", LocalDate.of(2021, 2, 26), p4, null, null)),
                 true);
 
         var m3 = new Comment("What about going in the mountains today?", LocalDate.of(2021, 3, 2), p3, List.of(p3, p1, p4, p2),
-                List.of(new Comment("That's an awesome idea.", LocalDate.now(), p1, null, null)),
+                List.of(new Comment("That's an awesome idea.", LocalDate.of(2021, 3, 4), p1, null, null)),
                 true);
 
         return (args) -> {
@@ -61,7 +61,6 @@ public class DemoApplication {
                 p4.addFriends(List.of(p1, p3));
                 p5.addFriends(List.of(p1));
                 profileRepository.saveAll(List.of(p1));
-                // commentRepository.saveAll(List.of(m1, m2, m3));
 		    };
         }
 }

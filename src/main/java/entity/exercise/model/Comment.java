@@ -20,7 +20,7 @@ public class Comment {
     LocalDate timestamp;
     @ManyToOne
     UserProfile user;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     List<UserProfile> likes;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<Comment> comments;

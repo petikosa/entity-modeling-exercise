@@ -26,12 +26,21 @@ public class CommentService {
         var posts = commentRepository.findAll().stream()
                 .filter(Comment::isPost)
                 .collect(Collectors.toMap(identity(), c -> c.getComments().size()));
-        return posts.entrySet().stream()
+        return sortByValue(posts);
+    }
+
+    public Map<Comment, Integer> getMostLikedComments() {
+        var comments = commentRepository.findAll().stream()
+                .collect(Collectors.toMap(identity(), c -> c.getLikes().size()));
+        return sortByValue(comments);
+    }
+
+    private Map<Comment, Integer> sortByValue(Map<Comment, Integer> comments) {
+        return comments.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
                         (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
-
 }
